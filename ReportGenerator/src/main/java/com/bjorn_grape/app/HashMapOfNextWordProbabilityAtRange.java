@@ -60,13 +60,19 @@ public class HashMapOfNextWordProbabilityAtRange {
 
     public Integer GetNextMostProbableWord(Integer Id) {
         if (IdToNextWordIdProbabilityNormalized.get(Id) == null)
-            throw new IllegalArgumentException("Word does not exist!");
-
-        int length = IdToNextWordIdProbabilityNormalized.get(Id).size();
+            return 1; // FIXME
+            //throw new IllegalArgumentException("Word does not exist!");
 
         Random rand = new Random();
-        int n = (rand.nextInt(10)) % length;
-        return IdToNextWordIdProbabilityNormalized.get(Id).get(n).Id;
+        int n = (rand.nextInt(100));
+        float percentage = (float) n / 100;
+        int index = 0;
+        while (percentage > IdToNextWordIdProbabilityNormalized.get(Id).get(index).Probability) {
+            percentage -= IdToNextWordIdProbabilityNormalized.get(Id).get(index).Probability;
+            index++;
+        }
+        index %= (IdToNextWordIdProbabilityNormalized.get(Id).size() );
+        return IdToNextWordIdProbabilityNormalized.get(Id).get(index).Id;
     }
 
     private class ProbaForId {

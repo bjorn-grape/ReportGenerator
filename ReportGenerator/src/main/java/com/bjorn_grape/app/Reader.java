@@ -24,7 +24,7 @@ public class Reader {
     }
 
     private boolean isASpace(char c) {
-        return c == ' ' || c == '\n' || c == '\t';
+        return c == ' ' || c == '\t';
     }
 
     private boolean isPunctuation(char s) {
@@ -50,16 +50,22 @@ public class Reader {
             s = getChar();
         }
 
-        if (isPunctuation(s)) {
-            while (notNull(s) && !isASpace(s) && isPunctuation(s)) {
+        if (s == '\n') {
+            sb.append('\n');
+        } else if (isPunctuation(s)) {
+            while (notNull(s) && !isASpace(s) && isPunctuation(s) && s != '\n') {
                 sb.append(s);
                 s = getChar();
             }
+            if(s == '\n')
+                index--;
         } else {
-            while (notNull(s) && !isASpace(s) && !isPunctuation(s)) {
+            while (notNull(s) && !isASpace(s) && !isPunctuation(s) && s != '\n') {
                 sb.append(s);
                 s = getChar();
             }
+            if(s == '\n')
+                index--;
         }
         return sb.toString();
     }
