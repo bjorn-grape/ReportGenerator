@@ -2,7 +2,6 @@ package com.bjorn_grape.app;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Scanner;
 
 public class Reader {
@@ -12,7 +11,7 @@ public class Reader {
 
     public Reader(String path) {
         try {
-            String pwdToresources = new java.io.File("src/main/resources").getAbsolutePath();
+            String pwdToresources = new java.io.File("src/main/java/resources").getAbsolutePath();
             Scanner scan = new Scanner(new File(pwdToresources + "/" + path));
             String txt = scan.useDelimiter("\\A").next();
             scan.close();
@@ -21,16 +20,6 @@ public class Reader {
         } catch (FileNotFoundException e) {
             System.err.println("Can't open file!");
             e.printStackTrace();
-        }
-    }
-
-    public static void main(String[] args) throws IOException {
-
-        Reader reader = new Reader("test.in");
-        String str = reader.getToken();
-        while (str.length() > 0) {
-            System.out.println(str);
-            str = reader.getToken();
         }
     }
 

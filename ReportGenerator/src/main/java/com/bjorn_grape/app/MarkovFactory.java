@@ -1,7 +1,6 @@
 package com.bjorn_grape.app;
 
 import java.util.HashMap;
-import java.util.function.Consumer;
 
 public class MarkovFactory {
     HashMap<String, Integer> StringToId = new HashMap<String, Integer>();
@@ -40,7 +39,7 @@ public class MarkovFactory {
         hmpat.clearProbabilityConstructor();
     }
 
-    public String getNextWord(String word){
-       return IdToString.get(hmpat.GetNextMostProbableWord(StringToId.get(word)));
+    public String getNextWord(String word) {
+        return IdToString.get(hmpat.GetNextMostProbableWord(StringToId.get(word)));
     }
 }

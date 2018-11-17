@@ -2,9 +2,10 @@ package com.bjorn_grape.app;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 public class HashMapOfNextWordProbabilityAtRange {
-    public int depth;
+    public int depth; // might be used later for predicting word from multiple others
 
     private HashMap<Integer, HashMap<Integer, Float>> IdToNextWordIdProbabilityConstructor = new HashMap<>();
     private HashMap<Integer, ArrayList<ProbaForId>> IdToNextWordIdProbabilityNormalized = new HashMap<>();
@@ -24,6 +25,14 @@ public class HashMapOfNextWordProbabilityAtRange {
         }
     }
 
+    private int testlth(float a, float b) {
+        if (a < b)
+            return 1;
+        else if (a > b)
+            return -1;
+        return 0;
+    }
+
     public void Normalizeprobabilities() {
         IdToNextWordIdProbabilityConstructor.forEach((integer1, IntFloatHM) -> {
             Float tmpsumm = 0f;
@@ -35,7 +44,7 @@ public class HashMapOfNextWordProbabilityAtRange {
             ArrayList<ProbaForId> arrayList = new ArrayList<>();
             IntFloatHM.forEach((i1, f1) -> arrayList.add(new ProbaForId(f1 /= sum, i1)));
             // sort in decreasing order
-            arrayList.sort((t1, t2) -> t1.Probability < t2.Probability ? 1 : -1);
+            arrayList.sort((t1, t2) -> testlth(t1.Probability, t2.Probability));
             IdToNextWordIdProbabilityNormalized.put(integer1, arrayList);
         });
     }
@@ -52,7 +61,12 @@ public class HashMapOfNextWordProbabilityAtRange {
     public Integer GetNextMostProbableWord(Integer Id) {
         if (IdToNextWordIdProbabilityNormalized.get(Id) == null)
             throw new IllegalArgumentException("Word does not exist!");
-        return IdToNextWordIdProbabilityNormalized.get(Id).get(0).Id;
+
+        int length = IdToNextWordIdProbabilityNormalized.get(Id).size();
+
+        Random rand = new Random();
+        int n = (rand.nextInt(10)) % length;
+        return IdToNextWordIdProbabilityNormalized.get(Id).get(n).Id;
     }
 
     private class ProbaForId {
