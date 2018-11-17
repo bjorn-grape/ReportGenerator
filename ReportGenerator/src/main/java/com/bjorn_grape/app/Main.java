@@ -6,11 +6,11 @@ public class Main {
 
     public static void main(String[] args) {
         MarkovFactory mkv = new MarkovFactory("test.in");
-        String ll = mkv.getNextWord("ACT");
+        String str = mkv.getNextWord("ACT");
         for (int i = 0; i < WordNumber; i++) {
-            System.out.print(ll + " ");
-            ll = mkv.getNextWord(ll);
+            System.out.print(str + " ");
+            str = mkv.getNextWord(str);
         }
-
+        System.out.println();
     }
 }
